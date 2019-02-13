@@ -1,0 +1,30 @@
+#!/bin/bash
+#LICENSE GPL Version 3
+#AUTHOR stefan@koospal.de
+
+ERRORSUM=0
+ERRORVALUES=""
+ERRORTEXTS=""
+
+errorhandler () {
+local lasterror=$1
+local behave=$2
+local errortext=$3
+$COMM "$1=errorvalue $2=INIT/CONT/ENDE/STOP $3=text"
+
+local TIMESTAMP=`date +"%Y%m%d%H%M%S"`
+ERRORSUM=$((ERRORSUM+lasterror))
+ERRORVALUES="$ERRORS $lasterror"
+ERRORTEXTS="$ERRORTEXTS;$errortext"
+case "$behave" in
+    "INIT") $NOTE $TIMESTAMP $errortext;return $lasterror;;
+    "CONT") return $lasterror;;
+    "ENDE") if [[ $lasterror == 0 ]];then return $lasterror;fi ;;
+    "STOP") $NOTE $TIMESTAMP $errortext;;
+    *) ;;
+esac 
+$NOTE $ERRORSUM $ERRORVALUES $ERRORTEXTS
+exit $ERRORSUM
+}
+
+

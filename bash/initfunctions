@@ -1,0 +1,10 @@
+#!/bin/bash
+#LICENSE GPL Version 3
+#AUTHOR stefan@koospal.de
+
+set +u
+COMM="echo comment: "
+NOTE="echo note: "
+DEBUG="echo debug: "
+
+

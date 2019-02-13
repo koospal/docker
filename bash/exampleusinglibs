@@ -1,0 +1,13 @@
+#!/bin/bash
+
+. initfunctions
+. errorfunctions
+COMM=":"
+errorhandler 0 INIT $0
+
+ls xx > /dev/null 2>&1
+errorhandler $? CONT "ls xx"
+
+ls -l > /dev/null
+errorhandler $? STOP $0
+
